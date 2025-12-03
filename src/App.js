@@ -9,6 +9,7 @@ function App() {
     <div className="page">
       {/* ---- HEADER ---- */}
       <header className="header">
+        {/* Hello tab works for demonstration */}
         <div 
           className={`tab ${activeTab === "hello" ? "active" : ""}`}
           onClick={() => setActiveTab("hello")}
@@ -16,23 +17,20 @@ function App() {
           Hello
         </div>
 
-        <div 
-          className={`tab ${activeTab === "home" ? "active" : ""}`}
-          onClick={() => setActiveTab("home")}
-        >
+        {/* Placeholder tabs: no action for now */}
+        <div className="tab">
           Home Page
         </div>
 
-        <div 
-          className={`tab ${activeTab === "about" ? "active" : ""}`}
-          onClick={() => setActiveTab("about")}
-        >
+        <div className="tab">
           About Us
         </div>
       </header>
 
       {/* ---- MAIN CONTENT ---- */}
       <main className="content">
+        {activeTab === "hello" && <h2>Hello Page</h2>}
+
         {activeTab === "home" && (
           <div>
             <h2>Type your password here</h2>
@@ -57,9 +55,6 @@ function App() {
             <div className="output-box"></div>
           </div>
         )}
-
-        {activeTab === "hello" && <h2>Hello Page</h2>}
-        {activeTab === "about" && <h2>About Us</h2>}
       </main>
     </div>
   );
