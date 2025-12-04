@@ -7,24 +7,19 @@ function App() {
 
   return (
     <div className="page">
+
       {/* ---- HEADER ---- */}
       <header className="header">
-        {/* Hello tab works for demonstration */}
         <div 
           className={`tab ${activeTab === "hello" ? "active" : ""}`}
           onClick={() => setActiveTab("hello")}
         >
           Hello
         </div>
-
-        {/* Placeholder tabs: no action for now */}
-        <div className="tab">
+        <div className={`tab ${activeTab === "home" ? "active" : ""}`} onClick={() => setActiveTab("home")}>
           Home Page
         </div>
-
-        <div className="tab">
-          About Us
-        </div>
+        <div className="tab">About Us</div>
       </header>
 
       {/* ---- MAIN CONTENT ---- */}
@@ -35,7 +30,7 @@ function App() {
           <div>
             <h2>Type your password here</h2>
 
-            {/* Input box */}
+            {/* Input */}
             <input 
               className="input-box"
               type="text"
@@ -44,18 +39,25 @@ function App() {
               onChange={(e) => setInput(e.target.value)}
             />
 
-            {/* Enter button */}
-            <button className="enter-btn">
-              Enter
-            </button>
+            {/* Button */}
+            <button className="enter-btn">Enter</button>
 
             <h2>Output</h2>
 
-            {/* Output box (empty for now) */}
+            {/* EMPTY Output box (reserved for future logic) */}
             <div className="output-box"></div>
           </div>
         )}
       </main>
+
+      {/* ---- FOOTER ---- */}
+      <footer className="footer">
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </footer>
+
     </div>
   );
 }
