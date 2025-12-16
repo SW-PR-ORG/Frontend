@@ -11,10 +11,10 @@ function Home() {
       {/*HEADER*/}
       <header className="header">
         <div 
-          className={`tab ${activeTab === "hello" ? "active" : ""}`}
-          onClick={() => setActiveTab("hello")}
+          className={`tab ${activeTab === "How It Works" ? "active" : ""}`}
+          onClick={() => setActiveTab("How It Works")}
         >
-          Hello
+          How It Works
         </div>
         <div 
           className={`tab ${activeTab === "home" ? "active" : ""}`}
