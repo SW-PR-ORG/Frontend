@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Home.css";
+import "./App.css";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("home");
