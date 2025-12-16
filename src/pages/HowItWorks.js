@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./HowItWorks.css";
+import "./App.css";
 
 function HowItWorks() {
   const [activeStep, setActiveStep] = useState(1);
