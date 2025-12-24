@@ -67,7 +67,10 @@ function HowItWorks() {
     {
       title: "Documentation, References, and Tools",
       links: {
-        documentation: [
+        our_documentation: [
+          { name: "GitHub Documentation", url: "https://github.com/SW-PR-ORG/backend/tree/documentation" },
+        ],
+        documentations_we_used: [
           { name: "XGBoost Documentation", url: "https://xgboost.readthedocs.io/en/stable/" },
           { name: "SHAP Documentation", url: "https://shap.readthedocs.io/en/latest/generated/shap.Explainer.html" },
         ],
@@ -117,7 +120,11 @@ function HowItWorks() {
                   <div className="reference-links">
                     {Object.entries(item.links).map(([category, links]) => (
                       <div key={category}>
-                        <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
+                        <h4>
+                          {category
+                            .replace(/_/g, " ")
+                            .replace(/\b\w/g, (c) => c.toUpperCase())}
+                        </h4>
                         <ul>
                           {links.map((link, i) => (
                             <li key={i}>
