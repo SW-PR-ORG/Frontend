@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import HowItWorks from './HowItWorks';
+import AboutUs from './AboutUs';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <HowItWorks />
+    <AboutUs />
   </React.StrictMode>
 );
 
