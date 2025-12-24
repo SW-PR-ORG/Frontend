@@ -1,67 +1,148 @@
 import React, { useState } from "react";
 import "./App.css";
 
+import softwareIcon from "./assets/software-application (1).png";
+import dataIcon from "./assets/data.png";
+import analyticsIcon from "./assets/analytics.png";
+import foorteenIcon from "./assets/number-14 (1).png";
+import crackingIcon from "./assets/cracking.png";
+
 function Home() {
-  const [activeTab, setActiveTab] = useState("home");
   const [input, setInput] = useState("");
+  const [mlOutput, setMlOutput] = useState("");
+  const [ruleOutput, setRuleOutput] = useState("");
+
+  const handleEvaluate = async () => {
+    if (!input) return;
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/evaluate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: input }),
+      });
+      const data = await response.json();
+      setMlOutput(data.flag ? data.message : `Score: ${data.score} - ${data.explanation}`);
+    } catch {
+      setMlOutput("Error: Could not evaluate password");
+    }
+  };
+
+  const handleRuleBased = async () => {
+    if (!input) return;
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/rule_based", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: input }),
+      });
+      const data = await response.json();
+      setRuleOutput(data.flag ? data.message : `Score: ${data.score} - ${data.explanation}`);
+    } catch {
+      setRuleOutput("Error: Could not evaluate password");
+    }
+  };
 
   return (
     <div className="page">
-
-      {/*HEADER*/}
       <header className="header">
-        <div 
-          className={`tab ${activeTab === "How It Works" ? "active" : ""}`}
-          onClick={() => setActiveTab("How It Works")}
-        >
-          How It Works
-        </div>
-        <div 
-          className={`tab ${activeTab === "home" ? "active" : ""}`}
-          onClick={() => setActiveTab("home")}
-        >
-          Home Page
-        </div>
+        <div className="tab">How It Works</div>
+        <div className="tab active">Home Page</div>
         <div className="tab">About Us</div>
       </header>
 
-      {/*MAIN CONTENT*/}
       <main className="content">
+        <div className="hero">
+          <h1>Hello</h1>
+          <p>Passwords are essential for protecting our digital identities.</p>
+        </div>
 
-        {activeTab === "hello" && <h2>Hello Page</h2>}
+        <h2>Type your password here</h2>
 
-        {activeTab === "home" && (
-          <div>
-            <h2>Type your password here</h2>
+        <div className="input-container">
+          <input
+            className="input-box"
+            type="text"
+            value={input}
+            placeholder="Enter password..."
+            onChange={(e) => setInput(e.target.value)}
+          />
 
-            {/*Input + Button Container*/}
-            <div className="input-container">
-              <input 
-                className="input-box"
-                type="text"
-                value={input}
-                placeholder="Enter password..."
-                onChange={(e) => setInput(e.target.value)}
-              />
-              <button className="enter-btn">Enter</button>
+          <div className="button-output-wrapper">
+            <button className="enter-btn" onClick={handleEvaluate}>
+              Evaluate
+            </button>
+            <h2>Machine Learning Score:</h2>
+            <div className="output-box">{mlOutput}</div>
+          </div>
+
+          <div className="button-output-wrapper">
+            <button className="rule-btn" onClick={handleRuleBased}>
+              Rule Based
+            </button>
+            <h2>Rule Based Score:</h2>
+            <div className="output-box rule-output">{ruleOutput}</div>
+          </div>
+        </div>
+
+        {/* INFO SECTION */}
+        <div className="info-section">
+          <h2>This Project Features</h2>
+
+          <div className="info-grid">
+            <div className="info-card">
+              <img src={softwareIcon} alt="XGBoost AI" className="info-icon" />
+              <h3>XGBoost AI</h3>
+              <p>Machine-learning based password evaluation.</p>
             </div>
 
-            <h2>Output</h2>
+            <div className="info-card">
+              <img src={analyticsIcon} alt="RockYou Dataset" className="info-icon" />
+              <h3>RockYou Dataset</h3>
+              <p>Real-world leaked passwords for realism.</p>
+            </div>
 
-            {/*Output box*/}
-            <div className="output-box"></div>
+            <div className="info-card">
+              <img src={dataIcon} alt="Data Engineering" className="info-icon" />
+              <h3>Data Engineering</h3>
+              <p>Cleaned, normalized, and optimized data.</p>
+            </div>
+
+            <div className="info-card-row">
+              <div className="info-card">
+                <img src={foorteenIcon} alt="14M Passwords" className="info-icon" />
+                <h3>14M Passwords</h3>
+                <p>Trained on millions of real passwords.</p>
+              </div>
+
+              <div className="info-card">
+                <img src={crackingIcon} alt="Realistic Attacks" className="info-icon" />
+                <h3>Realistic Attacks</h3>
+                <p>Inspired by PCFG cracking logic.</p>
+              </div>
+            </div>
           </div>
-        )}
+
+          <div className="strong-password">
+            <h3>How To Make a Strong Password</h3>
+            <ul>
+              <li>Use at least 12 characters</li>
+              <li>Mix letters, numbers, and symbols</li>
+              <li>Avoid reused or common passwords</li>
+              <li>Use a password manager</li>
+            </ul>
+          </div>
+
+          <div className="security-notes">
+            <h3>Important Security Notes</h3>
+            <ul>
+              <li>This project does not store or log passwords</li>
+              <li>Never reuse passwords across platforms</li>
+            </ul>
+          </div>
+        </div>
       </main>
-
-      {/*FOOTER*/}
-      <footer className="footer">
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </footer>
-
     </div>
   );
 }
