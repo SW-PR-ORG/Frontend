@@ -1,0 +1,256 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ============================= */
+/* PAGE LAYOUT */
+/* ============================= */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================= */
+/* HEADER / NAV */
+/* ============================= */
+.header {
+  display: flex;
+  justify-content: center;
+  gap: 90px;
+  padding: 22px 0;
+  background: linear-gradient(90deg, #ff2f2f, #ff8c2b);
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.active {
+  background: rgba(255, 255, 255, 0.35);
+  border-bottom: 3px solid #ffe066;
+}
+
+/* ============================= */
+/* CONTENT WRAPPER */
+/* ============================= */
+.content {
+  width: 90%;
+  max-width: 1200px;
+  margin: 60px auto 140px;
+}
+
+/* ============================= */
+/* SECTION HEADERS */
+/* ============================= */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-header h2 {
+  font-size: 34px;
+  color: #b10000;
+}
+
+.section-subtitle {
+  font-size: 18px;
+  color: #666;
+}
+
+/* ================================================= */
+/* HOW IT WORKS – STACKED CARDS */
+/* ================================================= */
+.stacked-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.stacked-card {
+  display: flex;
+  gap: 40px;
+  padding: 30px;
+  border-radius: 22px;
+  background: #fff5f0;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+.stacked-card:hover {
+  transform: translateY(-8px);
+  background: linear-gradient(135deg, #ffefe6, #ffe1cc);
+  box-shadow: 0 22px 50px rgba(255, 122, 41, 0.35);
+}
+
+.stacked-card.reverse {
+  flex-direction: row-reverse;
+}
+
+.stacked-image {
+  width: 40%;
+  height: 220px;
+  border-radius: 18px;
+}
+
+/* 🔴 HOW IT WORKS PLACEHOLDER: STRIPED */
+.how-it-works .placeholder {
+  background: repeating-linear-gradient(
+    45deg,
+    #ffd9c2,
+    #ffd9c2 10px,
+    #ffb68a 10px,
+    #ffb68a 20px
+  );
+}
+
+/* ============================= */
+/* STACKED TEXT */
+.stacked-text {
+  width: 60%;
+}
+
+.stacked-text h3 {
+  font-size: 22px;
+  color: #a80000;
+}
+
+.stacked-text p {
+  font-size: 16px;
+  color: #5a0000;
+  line-height: 1.7;
+}
+
+.reference-links h4 {
+  margin-top: 14px;
+  color: #8b0000;
+}
+
+.reference-links ul {
+  padding-left: 18px;
+}
+
+.reference-links li {
+  margin-bottom: 6px;
+}
+
+.reference-links a {
+  color: #ff6a00;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.reference-links a:hover {
+  text-decoration: underline;
+}
+
+/* ============================= */
+/* ABOUT US */
+/* ============================= */
+.about-section {
+  text-align: center;
+}
+
+.about-description {
+  max-width: 850px;
+  margin: 0 auto 60px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #5a0000;
+}
+
+/* About This Project – CARD CONTAINER */
+.info-stack.about-only {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+/* RESTORE ORIGINAL SIZE + HOVER */
+.about-only .info-card {
+  width: 340px;
+  padding: 28px;
+  border-radius: 22px;
+  background: #fff5f0;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+.about-only .info-card:hover {
+  transform: translateY(-8px);
+  background: linear-gradient(135deg, #ffefe6, #ffe1cc);
+  box-shadow: 0 22px 50px rgba(255, 80, 80, 0.4);
+}
+
+.info-card h3 {
+  font-size: 22px;
+  color: #a80000;
+}
+
+.info-card p {
+  font-size: 16px;
+  color: #5a0000;
+  line-height: 1.6;
+}
+
+/* ============================= */
+/* FOOTER */
+/* ============================= */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 18px 0;
+  background: linear-gradient(90deg, #ff8c2b, #ff2f2f);
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  color: white;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+@media (max-width: 900px) {
+  .stacked-card {
+    flex-direction: column;
+  }
+
+  .stacked-image,
+  .stacked-text {
+    width: 100%;
+  }
+
+  .about-only .info-card {
+    width: 100%;
+    max-width: 420px;
+  }
+}
