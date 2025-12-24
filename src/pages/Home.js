@@ -22,7 +22,9 @@ function Home() {
         body: JSON.stringify({ password: input }),
       });
       const data = await response.json();
-      setMlOutput(data.flag ? data.message : `Score: ${data.score} - ${data.explanation}`);
+      setMlOutput(
+        data.flag ? data.message : `Score: ${data.score} - ${data.explanation}`
+      );
     } catch {
       setMlOutput("Error: Could not evaluate password");
     }
@@ -38,112 +40,105 @@ function Home() {
         body: JSON.stringify({ password: input }),
       });
       const data = await response.json();
-      setRuleOutput(data.flag ? data.message : `Score: ${data.score} - ${data.explanation}`);
+      setRuleOutput(
+        data.flag ? data.message : `Score: ${data.score} - ${data.explanation}`
+      );
     } catch {
       setRuleOutput("Error: Could not evaluate password");
     }
   };
 
   return (
-    <div className="page">
-      <header className="header">
-        <div className="tab">How It Works</div>
-        <div className="tab active">Home Page</div>
-        <div className="tab">About Us</div>
-      </header>
+    <main className="content">
+      <div className="hero">
+        <h1>Hello</h1>
+        <p>Passwords are essential for protecting our digital identities.</p>
+      </div>
 
-      <main className="content">
-        <div className="hero">
-          <h1>Hello</h1>
-          <p>Passwords are essential for protecting our digital identities.</p>
+      <h2>Type your password here</h2>
+
+      <div className="input-container">
+        <input
+          className="input-box"
+          type="text"
+          value={input}
+          placeholder="Enter password..."
+          onChange={(e) => setInput(e.target.value)}
+        />
+
+        <div className="button-output-wrapper">
+          <button className="enter-btn" onClick={handleEvaluate}>
+            Evaluate
+          </button>
+          <h2>Machine Learning Score:</h2>
+          <div className="output-box">{mlOutput}</div>
         </div>
 
-        <h2>Type your password here</h2>
+        <div className="button-output-wrapper">
+          <button className="rule-btn" onClick={handleRuleBased}>
+            Rule Based
+          </button>
+          <h2>Rule Based Score:</h2>
+          <div className="output-box rule-output">{ruleOutput}</div>
+        </div>
+      </div>
 
-        <div className="input-container">
-          <input
-            className="input-box"
-            type="text"
-            value={input}
-            placeholder="Enter password..."
-            onChange={(e) => setInput(e.target.value)}
-          />
+      <div className="info-section">
+        <h2>This Project Features</h2>
 
-          <div className="button-output-wrapper">
-            <button className="enter-btn" onClick={handleEvaluate}>
-              Evaluate
-            </button>
-            <h2>Machine Learning Score:</h2>
-            <div className="output-box">{mlOutput}</div>
+        <div className="info-grid">
+          <div className="info-card">
+            <img src={softwareIcon} alt="" className="info-icon" />
+            <h3>XGBoost AI</h3>
+            <p>Machine-learning based password evaluation.</p>
           </div>
 
-          <div className="button-output-wrapper">
-            <button className="rule-btn" onClick={handleRuleBased}>
-              Rule Based
-            </button>
-            <h2>Rule Based Score:</h2>
-            <div className="output-box rule-output">{ruleOutput}</div>
+          <div className="info-card">
+            <img src={analyticsIcon} alt="" className="info-icon" />
+            <h3>RockYou Dataset</h3>
+            <p>Real-world leaked passwords for realism.</p>
+          </div>
+
+          <div className="info-card">
+            <img src={dataIcon} alt="" className="info-icon" />
+            <h3>Data Engineering</h3>
+            <p>Cleaned, normalized, and optimized data.</p>
+          </div>
+
+          <div className="info-card-row">
+            <div className="info-card">
+              <img src={foorteenIcon} alt="" className="info-icon" />
+              <h3>14M Passwords</h3>
+              <p>Trained on millions of real passwords.</p>
+            </div>
+
+            <div className="info-card">
+              <img src={crackingIcon} alt="" className="info-icon" />
+              <h3>Realistic Attacks</h3>
+              <p>Inspired by PCFG cracking logic.</p>
+            </div>
           </div>
         </div>
 
-        {/* INFO SECTION */}
-        <div className="info-section">
-          <h2>This Project Features</h2>
-
-          <div className="info-grid">
-            <div className="info-card">
-              <img src={softwareIcon} alt="XGBoost AI" className="info-icon" />
-              <h3>XGBoost AI</h3>
-              <p>Machine-learning based password evaluation.</p>
-            </div>
-
-            <div className="info-card">
-              <img src={analyticsIcon} alt="RockYou Dataset" className="info-icon" />
-              <h3>RockYou Dataset</h3>
-              <p>Real-world leaked passwords for realism.</p>
-            </div>
-
-            <div className="info-card">
-              <img src={dataIcon} alt="Data Engineering" className="info-icon" />
-              <h3>Data Engineering</h3>
-              <p>Cleaned, normalized, and optimized data.</p>
-            </div>
-
-            <div className="info-card-row">
-              <div className="info-card">
-                <img src={foorteenIcon} alt="14M Passwords" className="info-icon" />
-                <h3>14M Passwords</h3>
-                <p>Trained on millions of real passwords.</p>
-              </div>
-
-              <div className="info-card">
-                <img src={crackingIcon} alt="Realistic Attacks" className="info-icon" />
-                <h3>Realistic Attacks</h3>
-                <p>Inspired by PCFG cracking logic.</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="strong-password">
-            <h3>How To Make a Strong Password</h3>
-            <ul>
-              <li>Use at least 12 characters</li>
-              <li>Mix letters, numbers, and symbols</li>
-              <li>Avoid reused or common passwords</li>
-              <li>Use a password manager</li>
-            </ul>
-          </div>
-
-          <div className="security-notes">
-            <h3>Important Security Notes</h3>
-            <ul>
-              <li>This project does not store or log passwords</li>
-              <li>Never reuse passwords across platforms</li>
-            </ul>
-          </div>
+        <div className="strong-password">
+          <h3>How To Make a Strong Password</h3>
+          <ul>
+            <li>Use at least 12 characters</li>
+            <li>Mix letters, numbers, and symbols</li>
+            <li>Avoid reused or common passwords</li>
+            <li>Use a password manager</li>
+          </ul>
         </div>
-      </main>
-    </div>
+
+        <div className="security-notes">
+          <h3>Important Security Notes</h3>
+          <ul>
+            <li>This project does not store or log passwords</li>
+            <li>Never reuse passwords across platforms</li>
+          </ul>
+        </div>
+      </div>
+    </main>
   );
 }
 
