@@ -24,7 +24,7 @@ function Home() {
     setMlScore("");
 
     try {
-      const response = await fetch("backend-production-9560.up.railway.app", {
+      const response = await fetch("https://backend-production-9560.up.railway.app", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: input }),
@@ -75,7 +75,7 @@ function Home() {
     if (!input) return;
 
     try {
-      const response = await fetch("backend-production-9560.up.railway.app", {
+      const response = await fetch("https://backend-production-9560.up.railway.app", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: input }),
