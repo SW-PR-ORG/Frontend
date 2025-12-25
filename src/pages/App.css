@@ -254,3 +254,80 @@ body {
     max-width: 420px;
   }
 }
+
+/* Wrapper for both score and feedback */
+.rule-output-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center under button */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Score box */
+.score-box {
+  width: 100px;
+  height: 50px;
+  border: 2px solid;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Red if score < 10 */
+.score-box.low-score {
+  background-color: #ff4c4c;
+  border-color: #ff4c4c;
+  color: white;
+}
+
+/* Green only if score = 10 */
+.score-box.high-score {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+/* Feedback box */
+.feedback-box {
+  margin-top: 8px;
+  padding: 10px;
+  border: 2px solid #ff4c4c;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff5f0;
+  color: #333;
+}
+
+
+/* ------------------------------ */
+/* Space warning flash */
+/* ------------------------------ */
+.space-warning {
+  border: 2px solid red !important;
+  animation: flash-border 0.3s ease;
+}
+
+@keyframes flash-border {
+  0% { border-color: red; }
+  50% { border-color: white; }
+  100% { border-color: red; }
+}
+
+/* Output box for ML explanation */
+.output-box {
+  margin-top: 12px;
+  padding: 10px;
+  border: 2px solid #ff4c4c;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff5f0;
+  color: #333;
+  min-height: 60px; /* Optional: gives it consistent height */
+}

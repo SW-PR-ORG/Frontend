@@ -10,10 +10,18 @@ import crackingIcon from "./assets/cracking.png";
 function Home() {
   const [input, setInput] = useState("");
   const [mlOutput, setMlOutput] = useState("");
-  const [ruleOutput, setRuleOutput] = useState("");
+  const [mlScore, setMlScore] = useState("");
+  const [ruleScore, setRuleScore] = useState("");
+  const [ruleFeedback, setRuleFeedback] = useState([]);
+  const [spaceWarning, setSpaceWarning] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEvaluate = async () => {
     if (!input) return;
+    
+    setIsLoading(true);
+    setMlOutput("Evaluating...");
+    setMlScore("");
 
     try {
       const response = await fetch("http://127.0.0.1:8000/evaluate", {
@@ -21,12 +29,45 @@ function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: input }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      setMlOutput(
-        data.flag ? data.message : `Score: ${data.score} - ${data.explanation}`
-      );
-    } catch {
-      setMlOutput("Error: Could not evaluate password");
+
+      // Check for error response first
+      if (data.error) {
+        setMlOutput(data.error);
+        setMlScore("");
+      } 
+      // Check for the expected ML response structure
+      else if (data.ml_score !== undefined) {
+        const score = data.ml_score.toFixed(2);
+        const explanation = data.explanation || "No explanation available";
+        
+        setMlScore(score);
+        setMlOutput(`Explanation: ${explanation}`);
+      } 
+      // If structure is different but has score
+      else if (data.score !== undefined) {
+        const score = data.score.toFixed(2);
+        const explanation = data.explanation || "No explanation available";
+        
+        setMlScore(score);
+        setMlOutput(`Explanation: ${explanation}`);
+      }
+      else {
+        // Fallback: show the entire response for debugging
+        setMlOutput("Unexpected response format. Raw data: " + JSON.stringify(data));
+        setMlScore("");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setMlOutput(`Error: ${err.message}`);
+      setMlScore("");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -39,47 +80,104 @@ function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: input }),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
-      setRuleOutput(
-        data.flag ? data.message : `Score: ${data.score} - ${data.explanation}`
-      );
-    } catch {
-      setRuleOutput("Error: Could not evaluate password");
+
+      setRuleScore(data.rule_score ? data.rule_score.toFixed(2) : "0.00");
+      setRuleFeedback(data.feedback || []);
+    } catch (err) {
+      console.error("Rule-based fetch error:", err);
+      setRuleScore("");
+      setRuleFeedback([`Error: ${err.message}`]);
     }
   };
 
   return (
     <main className="content">
       <div className="hero">
-        <h1>Hello</h1>
-        <p>Passwords are essential for protecting our digital identities.</p>
+        <h1>Hello! Welcome to BTATS Password Evaluator.</h1>
+        <p>Type your password below to see how strong it is. Don’t forget to explore how this project works and learn more about who we are!</p>
       </div>
 
       <h2>Type your password here</h2>
 
       <div className="input-container">
         <input
-          className="input-box"
+          className={`input-box ${spaceWarning ? "space-warning" : ""}`}
           type="text"
           value={input}
           placeholder="Enter password..."
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => {
+            setInput(e.target.value.replace(/\s/g, ""));
+            // Clear ML results when typing new password
+            setMlScore("");
+            setMlOutput("");
+          }}
+          onKeyDown={(e) => {
+            if (e.key === " ") {
+              e.preventDefault();
+              setSpaceWarning(true);
+              setTimeout(() => setSpaceWarning(false), 300);
+            }
+          }}
         />
 
         <div className="button-output-wrapper">
-          <button className="enter-btn" onClick={handleEvaluate}>
-            Evaluate
+          <button 
+            className="enter-btn" 
+            onClick={handleEvaluate}
+            disabled={isLoading}
+          >
+            {isLoading ? "Evaluating..." : "Evaluate"}
           </button>
-          <h2>Machine Learning Score:</h2>
-          <div className="output-box">{mlOutput}</div>
+          
+          {mlScore !== "" && <h2>Machine Learning Score:</h2>}
+          
+          {mlScore !== "" && (
+            <div
+              className={`score-box ${
+                parseFloat(mlScore) >= 5 ? "high-score" : "low-score"
+              }`}
+            >
+              {mlScore}
+            </div>
+          )}
+          
+          <div className="output-box">
+            {mlOutput.split('\n').map((line, index) => (
+              <div key={index}>{line}</div>
+            ))}
+          </div>
         </div>
 
         <div className="button-output-wrapper">
           <button className="rule-btn" onClick={handleRuleBased}>
             Rule Based
           </button>
-          <h2>Rule Based Score:</h2>
-          <div className="output-box rule-output">{ruleOutput}</div>
+
+          {ruleScore !== "" && <h2>Traditional Rule Based Score:</h2>}
+
+          {ruleScore !== "" && (
+            <div
+              className={`score-box ${
+                parseFloat(ruleScore) === 10 ? "high-score" : "low-score"
+              }`}
+            >
+              {ruleScore}
+            </div>
+          )}
+
+          {ruleFeedback.length > 0 && (
+            <div className="feedback-box">
+              {ruleFeedback.map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
