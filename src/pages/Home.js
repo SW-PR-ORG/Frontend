@@ -7,6 +7,8 @@ import analyticsIcon from "./assets/analytics.png";
 import foorteenIcon from "./assets/number-14 (1).png";
 import crackingIcon from "./assets/cracking.png";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 function Home() {
   const [input, setInput] = useState("");
   const [mlOutput, setMlOutput] = useState("");
@@ -24,7 +26,7 @@ function Home() {
     setMlScore("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/evaluate", {
+      const response = await fetch(`${BACKEND_URL}/evaluate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: input }),
@@ -75,7 +77,7 @@ function Home() {
     if (!input) return;
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/rule_based", {
+      const response = await fetch(`${BACKEND_URL}/rule_based`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: input }),
